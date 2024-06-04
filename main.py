@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from database import models
 from database.database import engine
@@ -11,6 +12,8 @@ app.include_router(post.router)
 
 models.Base.metadata.create_all(engine)
 
+if not os.path.exists('images'):
+    os.makedirs('images')
 app.mount('/images', StaticFiles(directory='images'), name='images')
 
 origins = [
